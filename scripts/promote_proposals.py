@@ -5,8 +5,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
+import tempfile
 from collections import Counter
 from dataclasses import dataclass
 from datetime import date
@@ -42,6 +44,26 @@ class ProposalResult:
 
 def _load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _write_json_atomic(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    content = json.dumps(payload, indent=2, sort_keys=True) + "\n"
+    fd, tmp_name = tempfile.mkstemp(
+        dir=str(path.parent),
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+    )
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            handle.write(content)
+        os.replace(tmp_name, path)
+    except Exception:
+        try:
+            os.unlink(tmp_name)
+        except OSError:
+            pass
+        raise
 
 
 def _schema_version() -> int:
@@ -311,11 +333,9 @@ def _promote_one(proposal: dict[str, Any], dry_run: bool) -> ProposalResult:
 
     if not dry_run:
         if record_changed:
-            recording_path.parent.mkdir(parents=True, exist_ok=True)
-            recording_path.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+            _write_json_atomic(recording_path, record)
         if reverse_changed:
-            reverse_path.parent.mkdir(parents=True, exist_ok=True)
-            reverse_path.write_text(json.dumps(reverse_record, indent=2) + "\n", encoding="utf-8")
+            _write_json_atomic(reverse_path, reverse_record)
 
     return ProposalResult(status=status)
 
@@ -349,12 +369,19 @@ def main() -> int:
         action="store_true",
         help="Evaluate proposals and print summary without writing files.",
     )
+    parser.add_argument(
+        "--max-record-writes",
+        type=int,
+        default=None,
+        help="Maximum number of unique recording files to modify in one run.",
+    )
     args = parser.parse_args()
 
     added = 0
     updated = 0
     skipped = 0
     skipped_reasons: Counter[str] = Counter()
+    touched_recordings: set[str] = set()
 
     for proposal_file in args.proposal_files:
         path = Path(proposal_file)
@@ -377,11 +404,28 @@ def main() -> int:
                 continue
 
             assert proposal is not None
+            mbid = proposal.get("recording_mbid")
+            if (
+                isinstance(args.max_record_writes, int)
+                and args.max_record_writes >= 0
+                and isinstance(mbid, str)
+                and mbid.lower() not in touched_recordings
+                and len(touched_recordings) >= args.max_record_writes
+            ):
+                skipped += 1
+                skipped_reasons["batch_record_limit_reached"] += 1
+                print(f"[skip] {proposal_file}:{line_no}: batch_record_limit_reached")
+                continue
+
             result = _promote_one(proposal, dry_run=args.dry_run)
             if result.status == "added":
                 added += 1
+                if isinstance(mbid, str):
+                    touched_recordings.add(mbid.lower())
             elif result.status == "updated":
                 updated += 1
+                if isinstance(mbid, str):
+                    touched_recordings.add(mbid.lower())
             else:
                 skipped += 1
                 skipped_reasons[result.reason or "unknown"] += 1

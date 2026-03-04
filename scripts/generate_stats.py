@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -20,6 +22,26 @@ DATA_ROOTS = (
 
 def _load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _write_json_atomic(path: Path, payload: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    content = json.dumps(payload, indent=2, sort_keys=True) + "\n"
+    fd, tmp_name = tempfile.mkstemp(
+        dir=str(path.parent),
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+    )
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            handle.write(content)
+        os.replace(tmp_name, path)
+    except Exception:
+        try:
+            os.unlink(tmp_name)
+        except OSError:
+            pass
+        raise
 
 
 def _resolve_schema_version() -> int:
@@ -82,8 +104,7 @@ def main() -> int:
     computed = compute_stats()
 
     if args.write:
-        STATS_PATH.parent.mkdir(parents=True, exist_ok=True)
-        STATS_PATH.write_text(json.dumps(computed, indent=2) + "\n", encoding="utf-8")
+        _write_json_atomic(STATS_PATH, computed)
         print(f"Wrote {STATS_PATH.relative_to(ROOT)}")
         return 0
 

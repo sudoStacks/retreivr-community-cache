@@ -168,7 +168,13 @@ jobs:
 
           if accepted:
             proc = subprocess.run(
-              ["python", "scripts/promote_proposals.py", str(batch_path)],
+              [
+                "python",
+                "scripts/promote_proposals.py",
+                "--max-record-writes",
+                os.environ.get("MAX_RECORD_WRITES", "100"),
+                str(batch_path),
+              ],
               text=True,
               capture_output=True,
               check=False,

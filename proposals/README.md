@@ -81,6 +81,29 @@ If markers are missing, automation falls back to the first fenced `json` code bl
 - Promotion must happen via pull request.
 - No scheduled or bot-driven auto-write to `main`.
 
+## Deterministic Safety Guarantees
+
+Promotion tooling applies deterministic, full-file rewrites:
+
+- Read current record JSON.
+- Apply deterministic merge rules.
+- Rewrite complete JSON atomically (temporary file + rename), never partial appends.
+
+Deterministic source ordering in each recording file:
+
+- `confidence` descending
+- `video_id` ascending
+
+Reverse index constraints:
+
+- One-to-one mapping is enforced for `video_id -> recording_mbid`.
+- If a proposal maps an existing `video_id` to a different `recording_mbid`, it is skipped with `reverse_index_conflict`.
+
+Batch size guard:
+
+- Automation enforces a configurable max unique recording writes per run (`MAX_RECORD_WRITES` / `--max-record-writes`).
+- Promotion summary always reports `added`, `updated`, `skipped`, and skip reasons.
+
 ## CI Guardrails
 
 - Dataset files: full schema + path + duplicate checks.
