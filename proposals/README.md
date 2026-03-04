@@ -125,3 +125,57 @@ python scripts/promote_proposals.py --dry-run proposals/2026-03-04/acq-batch-001
 ```
 
 The tool performs basic proposal validation, writes/updates sharded files under `youtube/recording/`, merges existing source entries deterministically, and prints added/updated/skipped counts with skip reasons.
+
+## Automated Proposal Submission
+
+Retreivr can write proposal JSONL files locally, and contributors can automate submission using helper scripts in `scripts/`.
+
+### Prerequisites
+
+1. Install GitHub CLI:
+
+```bash
+brew install gh
+```
+
+or
+
+```bash
+sudo apt install gh
+```
+
+2. Authenticate once:
+
+```bash
+gh auth login
+```
+
+### Outbox location
+
+Default proposal outbox:
+
+- `~/.retreivr/community_outbox`
+
+Override with environment variable:
+
+- `RETREIVR_OUTBOX`
+
+### Scripts
+
+Submit proposals once:
+
+```bash
+/bin/sh ./scripts/submit_proposals.sh
+```
+
+Install cron automation:
+
+```bash
+/bin/sh ./scripts/install_submit_cron.sh
+```
+
+Behavior:
+
+- Local proposal `.jsonl` files are submitted as GitHub Issues labeled `proposal`.
+- GitHub Actions batch-promotes accepted proposals into the dataset.
+- Successfully submitted files are moved to `<outbox>/submitted/`.
