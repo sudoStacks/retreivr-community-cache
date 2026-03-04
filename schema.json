@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "record": {
+    "recording_mbid": "uuid",
+    "sources": [
+      {
+        "type": "youtube",
+        "video_id": "string",
+        "duration_ms": "integer",
+        "confidence": "float",
+        "verified_at": "date",
+        "channel_type": "official|label|topic|unknown"
+      }
+    ]
+  }
+}
