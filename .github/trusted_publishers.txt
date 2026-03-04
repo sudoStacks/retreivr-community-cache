@@ -1,3 +1,4 @@
 # GitHub usernames allowed for trusted batch promotion ingestion.
 # One username per line. Lines starting with # are ignored.
+loganbuilt
 
