@@ -1,4 +1,4 @@
-name: Batch Promote Proposals
+name: Batch Promote Proposals (Legacy)
 
 on:
   schedule:
@@ -234,7 +234,7 @@ jobs:
           all_failures = extraction_failures + promotion_failures
 
           changed = subprocess.run(
-            ["git", "diff", "--quiet", "--", "youtube/recording", "youtube/video", "stats/dataset.json"],
+            ["git", "diff", "--quiet", "--", "youtube/recording", "stats/dataset.json"],
             check=False,
           ).returncode != 0
 
@@ -269,9 +269,9 @@ jobs:
           branch: bot/trusted-batch-promotion/${{ github.run_id }}
           delete-branch: true
           commit-message: "chore(dataset): promote trusted proposal batch"
-          title: "Trusted batch promotion: +${{ steps.promote.outputs.added }} updated:${{ steps.promote.outputs.updated }} skipped:${{ steps.promote.outputs.skipped }}"
+          title: "Legacy trusted batch promotion: +${{ steps.promote.outputs.added }} updated:${{ steps.promote.outputs.updated }} skipped:${{ steps.promote.outputs.skipped }}"
           body: |
-            Automated trusted proposal batch promotion.
+            Automated trusted proposal batch promotion using the legacy issue-based intake path.
 
             - Added: ${{ steps.promote.outputs.added }}
             - Updated: ${{ steps.promote.outputs.updated }}

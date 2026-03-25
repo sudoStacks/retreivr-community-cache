@@ -22,19 +22,12 @@ Examples:
 Each proposal record should include:
 
 - `recording_mbid`: MusicBrainz recording MBID (UUID)
-- `type`: transport type (currently expected: `youtube`)
+- `source`: transport type (currently expected: `youtube`)
 - `video_id`: provider identifier (YouTube ID for `youtube`)
-- `duration_ms`: observed duration in milliseconds
-- `confidence`: 0..1 confidence score
-- `verified_at`: verification date (`YYYY-MM-DD`)
-- `provenance`: object describing where the proposal came from
-
-Recommended `provenance` fields:
-
-- `producer`: tool/system that generated the proposal (for example, `retreivr`)
-- `producer_version`: producer version string
-- `run_id`: job/run identifier
-- `evidence`: short list of matching signals used during verification
+- `candidate_url`: canonical source URL
+- `selected_score`: 0..1 confidence score
+- `emitted_at`: verification timestamp (`date-time`)
+- optional fields such as `duration_ms`, `candidate_id`, `duration_delta_ms`, `retreivr_version`, `verified_by`
 
 ## Issue Submission Format (for Trusted Batch Promotion)
 
@@ -49,22 +42,14 @@ Trusted batch automation reads proposals from open GitHub Issues labeled `propos
 <!-- proposal:start -->
 {
   "recording_mbid": "4b9d0f41-3d5e-4649-8137-9a071f7e9667",
-  "type": "youtube",
+  "source": "youtube",
   "video_id": "dQw4w9WgXcQ",
+  "candidate_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   "duration_ms": 242000,
-  "confidence": 0.97,
-  "verified_at": "2026-03-04",
-  "channel_type": "official",
-  "provenance": {
-    "producer": "retreivr",
-    "producer_version": "1.2.3",
-    "run_id": "acq-20260304-001",
-    "evidence": [
-      "exact_title_match",
-      "artist_match",
-      "duration_within_tolerance"
-    ]
-  }
+  "selected_score": 0.97,
+  "emitted_at": "2026-03-04T12:00:00+00:00",
+  "retreivr_version": "0.9.16",
+  "verified_by": "retreivr"
 }
 <!-- proposal:end -->
 ```
@@ -91,11 +76,6 @@ Deterministic source ordering in each recording file:
 - `confidence` descending
 - `video_id` ascending
 
-Reverse index constraints:
-
-- One-to-one mapping is enforced for `video_id -> recording_mbid`.
-- If a proposal maps an existing `video_id` to a different `recording_mbid`, it is skipped with `reverse_index_conflict`.
-
 Batch size guard:
 
 - Automation enforces a configurable max unique recording writes per run (`MAX_RECORD_WRITES` / `--max-record-writes`).
@@ -121,7 +101,7 @@ Dry-run mode:
 python scripts/promote_proposals.py --dry-run proposals/2026-03-04/acq-batch-001.jsonl
 ```
 
-The tool performs basic proposal validation, writes/updates sharded files under `youtube/recording/`, merges existing source entries deterministically, and prints added/updated/skipped counts with skip reasons.
+The tool validates the live Retreivr proposal contract, applies the repository confidence floor from `.github/publish_policy.json`, writes/updates sharded files under `youtube/recording/`, merges existing source entries deterministically, and prints added/updated/skipped counts with skip reasons.
 
 ## Automated Proposal Submission
 

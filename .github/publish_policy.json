@@ -4,7 +4,6 @@
     "youtube"
   ],
   "trusted_branch_prefixes": [
-    "retreivr-community-publish/",
-    "retreivr-community-cache-publish/"
+    "retreivr-community-publish/"
   ]
 }

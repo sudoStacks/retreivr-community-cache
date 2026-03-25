@@ -11,29 +11,20 @@ import sys
 import tempfile
 from collections import Counter
 from dataclasses import dataclass
-from datetime import date
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
 YOUTUBE_ROOT = ROOT / "youtube" / "recording"
-YOUTUBE_VIDEO_ROOT = ROOT / "youtube" / "video"
 SCHEMA_PATH = ROOT / "schema" / "schema.json"
+POLICY_PATH = ROOT / ".github" / "publish_policy.json"
 
 MBID_RE = re.compile(
     r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
 )
 VIDEO_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
-DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-CHANNEL_TYPES = {"official", "label", "vevo", "topic", "unknown"}
-CHANNEL_RANK = {
-    "official": 5,
-    "label": 4,
-    "vevo": 3,
-    "topic": 2,
-    "unknown": 1,
-}
 
 
 @dataclass
@@ -49,11 +40,7 @@ def _load_json(path: Path) -> Any:
 def _write_json_atomic(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     content = json.dumps(payload, indent=2, sort_keys=True) + "\n"
-    fd, tmp_name = tempfile.mkstemp(
-        dir=str(path.parent),
-        prefix=f".{path.name}.",
-        suffix=".tmp",
-    )
+    fd, tmp_name = tempfile.mkstemp(dir=str(path.parent), prefix=f".{path.name}.", suffix=".tmp")
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
             handle.write(content)
@@ -75,14 +62,58 @@ def _schema_version() -> int:
     return value if isinstance(value, int) else 1
 
 
-def _is_valid_date(value: str) -> bool:
-    if not DATE_RE.fullmatch(value):
-        return False
+def _publish_policy() -> dict[str, Any]:
     try:
-        date.fromisoformat(value)
+        raw = _load_json(POLICY_PATH)
+    except Exception:
+        raw = {}
+    if not isinstance(raw, dict):
+        raw = {}
+    return raw
+
+
+def _min_confidence() -> float:
+    try:
+        return float(_publish_policy().get("minimum_confidence", 0.0))
+    except Exception:
+        return 0.0
+
+
+def _allowed_sources() -> set[str]:
+    policy = _publish_policy()
+    values = policy.get("allowed_sources")
+    if isinstance(values, list):
+        normalized = {str(item).strip() for item in values if str(item).strip()}
+        if normalized:
+            return normalized
+    return {"youtube"}
+
+
+def _is_valid_datetime(value: str) -> bool:
+    if not isinstance(value, str) or not value.strip():
+        return False
+    normalized = value.strip().replace("Z", "+00:00")
+    try:
+        datetime.fromisoformat(normalized)
     except ValueError:
         return False
     return True
+
+
+def _target_path(recording_mbid: str) -> Path:
+    mbid = recording_mbid.lower()
+    return YOUTUBE_ROOT / mbid[:2] / f"{mbid}.json"
+
+
+def _source_sort_key(source: dict[str, Any]) -> tuple[float, str]:
+    return (-float(source.get("confidence") or 0.0), str(source.get("video_id") or ""))
+
+
+def _normalize_proposal_source(value: Any) -> str:
+    source = str(value or "youtube").strip().lower()
+    if source == "youtube_music":
+        return "youtube"
+    return source
 
 
 def _validate_proposal(record: Any) -> tuple[bool, str | None]:
@@ -93,85 +124,56 @@ def _validate_proposal(record: Any) -> tuple[bool, str | None]:
     if not isinstance(mbid, str) or not MBID_RE.fullmatch(mbid):
         return False, "invalid_recording_mbid"
 
-    if record.get("type") != "youtube":
-        return False, "invalid_type"
+    source = _normalize_proposal_source(record.get("source"))
+    if source not in _allowed_sources():
+        return False, "invalid_source"
 
     video_id = record.get("video_id")
     if not isinstance(video_id, str) or not VIDEO_ID_RE.fullmatch(video_id):
         return False, "invalid_video_id"
 
+    candidate_url = record.get("candidate_url")
+    if not isinstance(candidate_url, str) or not candidate_url.strip():
+        return False, "missing_candidate_url"
+
+    try:
+        confidence = float(record.get("selected_score"))
+    except (TypeError, ValueError):
+        return False, "invalid_selected_score"
+    if confidence < _min_confidence() or confidence > 1:
+        return False, "score_below_policy"
+
+    emitted_at = record.get("emitted_at")
+    if not isinstance(emitted_at, str) or not _is_valid_datetime(emitted_at):
+        return False, "invalid_emitted_at"
+
     duration_ms = record.get("duration_ms")
-    if not isinstance(duration_ms, int) or not (1 <= duration_ms <= 7_200_000):
-        return False, "invalid_duration_ms"
-
-    confidence = record.get("confidence")
-    if not isinstance(confidence, (int, float)) or not (0 <= float(confidence) <= 1):
-        return False, "invalid_confidence"
-
-    verified_at = record.get("verified_at")
-    if not isinstance(verified_at, str) or not _is_valid_date(verified_at):
-        return False, "invalid_verified_at"
-
-    channel_type = record.get("channel_type")
-    if not isinstance(channel_type, str) or channel_type not in CHANNEL_TYPES:
-        return False, "invalid_channel_type"
+    if duration_ms is not None:
+        if isinstance(duration_ms, bool) or not isinstance(duration_ms, int):
+            return False, "invalid_duration_ms"
+        if duration_ms <= 0 or duration_ms > 7_200_000:
+            return False, "invalid_duration_ms"
 
     return True, None
 
 
-def _source_sort_key(source: dict[str, Any]) -> tuple[float, str]:
-    return (-float(source["confidence"]), source["video_id"])
-
-
-def _merge_source(existing: dict[str, Any], incoming: dict[str, Any]) -> tuple[dict[str, Any], bool]:
-    merged = dict(existing)
-    changed = False
-
-    # Deterministic merges:
-    # confidence -> max, verified_at -> max (ISO date), duration -> latest verified_at wins,
-    # channel_type -> highest trust rank.
-    max_conf = max(float(existing["confidence"]), float(incoming["confidence"]))
-    if float(merged["confidence"]) != max_conf:
-        merged["confidence"] = max_conf
-        changed = True
-
-    max_verified = max(str(existing["verified_at"]), str(incoming["verified_at"]))
-    if merged["verified_at"] != max_verified:
-        merged["verified_at"] = max_verified
-        changed = True
-
-    incoming_is_newer = str(incoming["verified_at"]) > str(existing["verified_at"])
-    if incoming_is_newer and merged["duration_ms"] != incoming["duration_ms"]:
-        merged["duration_ms"] = incoming["duration_ms"]
-        changed = True
-
-    existing_rank = CHANNEL_RANK.get(str(existing["channel_type"]), 0)
-    incoming_rank = CHANNEL_RANK.get(str(incoming["channel_type"]), 0)
-    if incoming_rank > existing_rank and merged["channel_type"] != incoming["channel_type"]:
-        merged["channel_type"] = incoming["channel_type"]
-        changed = True
-
-    return merged, changed
-
-
-def _target_path(recording_mbid: str) -> Path:
-    mbid = recording_mbid.lower()
-    return YOUTUBE_ROOT / mbid[:2] / f"{mbid}.json"
-
-
-def _reverse_target_path(video_id: str) -> Path:
-    prefix = video_id[:2].lower()
-    return YOUTUBE_VIDEO_ROOT / prefix / f"{video_id}.json"
-
-
 def _normalize_new_source(proposal: dict[str, Any]) -> dict[str, Any]:
+    duration_ms = proposal.get("duration_ms")
     return {
-        "type": "youtube",
+        "source": _normalize_proposal_source(proposal.get("source")),
         "video_id": proposal["video_id"],
-        "duration_ms": int(proposal["duration_ms"]),
-        "confidence": float(proposal["confidence"]),
-        "verified_at": proposal["verified_at"],
-        "channel_type": proposal["channel_type"],
+        "duration_ms": int(duration_ms) if isinstance(duration_ms, int) else None,
+        "candidate_url": str(proposal.get("candidate_url") or "").strip() or None,
+        "candidate_id": str(proposal.get("candidate_id") or proposal["video_id"]).strip() or proposal["video_id"],
+        "confidence": float(proposal["selected_score"]),
+        "duration_delta_ms": (
+            int(proposal["duration_delta_ms"])
+            if isinstance(proposal.get("duration_delta_ms"), int)
+            else None
+        ),
+        "retreivr_version": str(proposal.get("retreivr_version") or "").strip() or None,
+        "last_verified_at": str(proposal["emitted_at"]).strip(),
+        "verified_by": str(proposal.get("verified_by") or "retreivr").strip() or "retreivr",
     }
 
 
@@ -180,6 +182,7 @@ def _load_or_init_record(path: Path, recording_mbid: str) -> tuple[dict[str, Any
         return {
             "schema_version": _schema_version(),
             "recording_mbid": recording_mbid,
+            "updated_at": None,
             "sources": [],
         }, None
 
@@ -192,86 +195,35 @@ def _load_or_init_record(path: Path, recording_mbid: str) -> tuple[dict[str, Any
         return {}, "invalid_existing_record"
     if record.get("recording_mbid") != recording_mbid:
         return {}, "existing_mbid_mismatch"
-
-    sources = record.get("sources")
-    if not isinstance(sources, list):
+    if not isinstance(record.get("sources"), list):
         return {}, "invalid_existing_sources"
-
     return record, None
 
 
-def _validate_reverse_record(record: Any, video_id: str) -> tuple[dict[str, Any], str | None]:
-    if not isinstance(record, dict):
-        return {}, "invalid_existing_reverse_index"
-
-    required_keys = {"video_id", "recording_mbid", "confidence", "verified_at"}
-    if set(record.keys()) != required_keys:
-        return {}, "invalid_existing_reverse_index"
-
-    existing_video_id = record.get("video_id")
-    if not isinstance(existing_video_id, str) or existing_video_id != video_id:
-        return {}, "invalid_existing_reverse_index"
-
-    mbid = record.get("recording_mbid")
-    if not isinstance(mbid, str) or not MBID_RE.fullmatch(mbid):
-        return {}, "invalid_existing_reverse_index"
-
-    confidence = record.get("confidence")
-    if not isinstance(confidence, (int, float)) or not (0 <= float(confidence) <= 1):
-        return {}, "invalid_existing_reverse_index"
-
-    verified_at = record.get("verified_at")
-    if not isinstance(verified_at, str) or not _is_valid_date(verified_at):
-        return {}, "invalid_existing_reverse_index"
-
-    normalized = {
-        "video_id": existing_video_id,
-        "recording_mbid": mbid.lower(),
-        "confidence": float(confidence),
-        "verified_at": verified_at,
-    }
-    return normalized, None
-
-
-def _load_existing_reverse(path: Path, video_id: str) -> tuple[dict[str, Any] | None, str | None]:
-    if not path.exists():
-        return None, None
-
-    try:
-        record = _load_json(path)
-    except Exception:
-        return None, "invalid_existing_reverse_index"
-
-    normalized, err = _validate_reverse_record(record, video_id)
-    if err is not None:
-        return None, err
-    return normalized, None
-
-
-def _merge_reverse_record(
-    existing: dict[str, Any] | None,
-    recording_mbid: str,
-    source: dict[str, Any],
-) -> tuple[dict[str, Any], bool]:
-    if existing is None:
-        return {
-            "video_id": source["video_id"],
-            "recording_mbid": recording_mbid,
-            "confidence": float(source["confidence"]),
-            "verified_at": source["verified_at"],
-        }, True
-
+def _merge_source(existing: dict[str, Any], incoming: dict[str, Any]) -> tuple[dict[str, Any], bool]:
     merged = dict(existing)
     changed = False
 
-    max_conf = max(float(existing["confidence"]), float(source["confidence"]))
-    if float(merged["confidence"]) != max_conf:
+    max_conf = max(float(existing.get("confidence") or 0.0), float(incoming.get("confidence") or 0.0))
+    if float(merged.get("confidence") or 0.0) != max_conf:
         merged["confidence"] = max_conf
         changed = True
 
-    max_verified = max(str(existing["verified_at"]), str(source["verified_at"]))
-    if merged["verified_at"] != max_verified:
-        merged["verified_at"] = max_verified
+    incoming_verified = str(incoming.get("last_verified_at") or "")
+    existing_verified = str(existing.get("last_verified_at") or "")
+    max_verified = max(existing_verified, incoming_verified)
+    if str(merged.get("last_verified_at") or "") != max_verified:
+        merged["last_verified_at"] = max_verified
+        changed = True
+
+    for key in ("duration_ms", "candidate_url", "candidate_id", "duration_delta_ms", "retreivr_version", "verified_by"):
+        incoming_value = incoming.get(key)
+        if incoming_verified >= existing_verified and merged.get(key) != incoming_value and incoming_value is not None:
+            merged[key] = incoming_value
+            changed = True
+
+    if merged.get("source") != incoming.get("source"):
+        merged["source"] = incoming.get("source")
         changed = True
 
     return merged, changed
@@ -282,16 +234,9 @@ def _promote_one(proposal: dict[str, Any], dry_run: bool) -> ProposalResult:
     if not valid:
         return ProposalResult("skipped", reason=reason)
 
-    recording_mbid = proposal["recording_mbid"].lower()
+    recording_mbid = str(proposal["recording_mbid"]).lower()
     source = _normalize_new_source(proposal)
     recording_path = _target_path(recording_mbid)
-    reverse_path = _reverse_target_path(source["video_id"])
-
-    existing_reverse, reverse_err = _load_existing_reverse(reverse_path, source["video_id"])
-    if reverse_err is not None:
-        return ProposalResult("skipped", reason=reverse_err)
-    if existing_reverse is not None and existing_reverse["recording_mbid"] != recording_mbid:
-        return ProposalResult("skipped", reason="reverse_index_conflict")
 
     record, load_err = _load_or_init_record(recording_path, recording_mbid)
     if load_err is not None:
@@ -302,7 +247,7 @@ def _promote_one(proposal: dict[str, Any], dry_run: bool) -> ProposalResult:
     for idx, item in enumerate(sources):
         if not isinstance(item, dict):
             return ProposalResult("skipped", reason="invalid_existing_source_entry")
-        if item.get("type") == "youtube" and item.get("video_id") == source["video_id"]:
+        if item.get("video_id") == source["video_id"]:
             existing_idx = idx
             break
 
@@ -319,23 +264,22 @@ def _promote_one(proposal: dict[str, Any], dry_run: bool) -> ProposalResult:
             status = "updated"
 
     sources.sort(key=_source_sort_key)
+    emitted_at = str(proposal.get("emitted_at") or "").strip()
+    if record.get("updated_at") != max(str(record.get("updated_at") or ""), emitted_at):
+        record["updated_at"] = max(str(record.get("updated_at") or ""), emitted_at) or emitted_at
+        record_changed = True
     record["recording_mbid"] = recording_mbid
     record["schema_version"] = _schema_version()
     record["sources"] = sources
 
-    reverse_record, reverse_changed = _merge_reverse_record(existing_reverse, recording_mbid, source)
-
-    if not record_changed and not reverse_changed:
+    if not record_changed:
         return ProposalResult("skipped", reason="no_change")
 
-    if existing_idx is not None and (record_changed or reverse_changed):
+    if existing_idx is not None:
         status = "updated"
 
     if not dry_run:
-        if record_changed:
-            _write_json_atomic(recording_path, record)
-        if reverse_changed:
-            _write_json_atomic(reverse_path, reverse_record)
+        _write_json_atomic(recording_path, record)
 
     return ProposalResult(status=status)
 
@@ -356,19 +300,9 @@ def _iter_jsonl(path: Path) -> tuple[int, dict[str, Any] | None, str | None]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Promote proposal JSONL records into sharded dataset records."
-    )
-    parser.add_argument(
-        "proposal_files",
-        nargs="+",
-        help="One or more proposal JSONL files.",
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Evaluate proposals and print summary without writing files.",
-    )
+    parser = argparse.ArgumentParser(description="Promote proposal JSONL records into sharded dataset records.")
+    parser.add_argument("proposal_files", nargs="+", help="One or more proposal JSONL files.")
+    parser.add_argument("--dry-run", action="store_true", help="Evaluate proposals and print summary without writing files.")
     parser.add_argument(
         "--max-record-writes",
         type=int,
