@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "5cd6e6ec-5985-49e3-adbb-a39fe11612f6",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "DSjB50-ADOg",
+      "candidate_url": "https://www.youtube.com/watch?v=DSjB50-ADOg",
+      "confidence": 1.0,
+      "duration_delta_ms": 0,
+      "duration_ms": 189840,
+      "last_verified_at": "2026-03-26T14:47:12+00:00",
+      "retreivr_version": "backfill",
+      "source": "youtube",
+      "verified_by": "retreivr_backfill",
+      "video_id": "DSjB50-ADOg"
+    }
+  ],
+  "updated_at": "2026-03-26T20:53:25+00:00"
+}
