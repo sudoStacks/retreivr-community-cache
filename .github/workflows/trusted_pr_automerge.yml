@@ -67,8 +67,36 @@ jobs:
             core.setOutput("trusted", trusted ? "true" : "false");
             core.setOutput("pr_number", String(pr.number));
 
-      - name: Enable auto-merge
+      - name: Wait for dataset validation
         if: steps.trust.outputs.trusted == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr merge --repo "${{ github.repository }}" --auto --squash "${{ steps.trust.outputs.pr_number }}"
+          PR_NUMBER: ${{ steps.trust.outputs.pr_number }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 120); do
+            state="$({
+              gh pr checks "${PR_NUMBER}" \
+                --repo "${{ github.repository }}" \
+                --json name,state \
+                --jq '[.[] | select(.name == "validate")][-1].state // "PENDING"'
+            } 2>/dev/null || echo "PENDING")"
+            case "${state}" in
+              SUCCESS)
+                exit 0
+                ;;
+              FAILURE|ERROR|CANCELLED|SKIPPED|STALE)
+                echo "Dataset validation did not pass: ${state}" >&2
+                exit 1
+                ;;
+            esac
+            sleep 5
+          done
+          echo "Timed out waiting for dataset validation." >&2
+          exit 1
+
+      - name: Merge validated trusted PR
+        if: steps.trust.outputs.trusted == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge --repo "${{ github.repository }}" --squash "${{ steps.trust.outputs.pr_number }}"
