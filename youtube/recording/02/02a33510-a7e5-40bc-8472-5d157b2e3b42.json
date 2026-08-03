@@ -1,0 +1,17 @@
+{
+  "recording_mbid": "02a33510-a7e5-40bc-8472-5d157b2e3b42",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "hdCICEB-_fk",
+      "candidate_url": "https://youtube.com/watch?v=hdCICEB-_fk",
+      "confidence": 0.89,
+      "last_verified_at": "2026-08-03T21:21:15+00:00",
+      "retreivr_version": "1.1.1+bfceab4",
+      "source": "youtube",
+      "verified_by": "successful_playback",
+      "video_id": "hdCICEB-_fk"
+    }
+  ],
+  "updated_at": "2026-08-03T22:20:14+00:00"
+}
