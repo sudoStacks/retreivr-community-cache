@@ -7,7 +7,6 @@
       "candidate_url": "https://www.youtube.com/watch?v=6bmW6gVpMrY",
       "confidence": 1.0,
       "duration_delta_ms": null,
-      "duration_ms": 0,
       "last_verified_at": "2026-08-03T16:51:21+00:00",
       "retreivr_version": "runtime_playback",
       "source": "youtube",
