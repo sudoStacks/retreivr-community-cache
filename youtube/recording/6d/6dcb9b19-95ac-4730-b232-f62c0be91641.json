@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "6dcb9b19-95ac-4730-b232-f62c0be91641",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "2641015b9df153a0",
+      "candidate_url": "https://soundcloud.com/user-544514415-802750806/the-beaches-of-cheyenne-garth",
+      "confidence": 1.0,
+      "duration_delta_ms": null,
+      "duration_ms": null,
+      "last_verified_at": "2026-08-03T16:30:31+00:00",
+      "retreivr_version": "review_accept",
+      "source": "unknown",
+      "verified_by": "operator_review_accept",
+      "video_id": "2641015b9df153a0"
+    }
+  ],
+  "updated_at": "2026-08-03T17:25:42+00:00"
+}
