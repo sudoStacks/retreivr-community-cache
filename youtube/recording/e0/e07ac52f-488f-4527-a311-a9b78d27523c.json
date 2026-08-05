@@ -1,0 +1,17 @@
+{
+  "recording_mbid": "e07ac52f-488f-4527-a311-a9b78d27523c",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "sXWF_-FSLuc",
+      "candidate_url": "https://youtube.com/watch?v=sXWF_-FSLuc",
+      "confidence": 1.0,
+      "last_verified_at": "2026-08-05T20:58:26+00:00",
+      "retreivr_version": "v1.1.3",
+      "source": "youtube",
+      "verified_by": "successful_playback",
+      "video_id": "sXWF_-FSLuc"
+    }
+  ],
+  "updated_at": "2026-08-05T21:58:15+00:00"
+}
