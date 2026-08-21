@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "69cfed29-821f-497f-9eb8-1306fb8fa9bd",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "ac9db30bab35434f",
+      "candidate_url": "https://www.youtube.com/watch?v=Ehak-AfV-QQ",
+      "confidence": 1.0,
+      "duration_delta_ms": 0,
+      "duration_ms": 216000,
+      "last_verified_at": "2026-08-21T04:48:54+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "Ehak-AfV-QQ"
+    }
+  ],
+  "updated_at": "2026-08-21T04:53:45+00:00"
+}
