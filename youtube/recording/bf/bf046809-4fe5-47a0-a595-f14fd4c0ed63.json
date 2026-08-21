@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "bf046809-4fe5-47a0-a595-f14fd4c0ed63",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "b3e8a86e192d9628",
+      "candidate_url": "https://www.youtube.com/watch?v=XHTxe-AMI-I",
+      "confidence": 0.8039542615956711,
+      "duration_delta_ms": 5000,
+      "duration_ms": 187747,
+      "last_verified_at": "2026-08-21T07:31:45+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "XHTxe-AMI-I"
+    }
+  ],
+  "updated_at": "2026-08-21T07:53:43+00:00"
+}
