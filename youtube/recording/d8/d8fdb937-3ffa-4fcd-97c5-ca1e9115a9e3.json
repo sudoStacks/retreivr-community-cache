@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "d8fdb937-3ffa-4fcd-97c5-ca1e9115a9e3",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "97fe5ef9454d996f",
+      "candidate_url": "https://www.youtube.com/watch?v=PTO_3Vjoigo",
+      "confidence": 1.0,
+      "duration_delta_ms": 1000,
+      "duration_ms": 285800,
+      "last_verified_at": "2026-08-21T02:36:37+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "PTO_3Vjoigo"
+    }
+  ],
+  "updated_at": "2026-08-21T02:53:44+00:00"
+}
