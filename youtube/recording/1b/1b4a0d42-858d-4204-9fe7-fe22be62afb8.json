@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "1b4a0d42-858d-4204-9fe7-fe22be62afb8",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "0cefad86ba34e217",
+      "candidate_url": "https://www.youtube.com/watch?v=Rpg7-ab_F7s",
+      "confidence": 0.8486186498467498,
+      "duration_delta_ms": 1000,
+      "duration_ms": 173546,
+      "last_verified_at": "2026-08-21T05:50:45+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "Rpg7-ab_F7s"
+    }
+  ],
+  "updated_at": "2026-08-21T05:53:47+00:00"
+}
