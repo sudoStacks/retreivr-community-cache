@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "e476dfc3-5db0-4532-8e65-fe36d38888a0",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "3b17d9a8f97d66fd",
+      "candidate_url": "https://www.youtube.com/watch?v=VpE1CndMONI",
+      "confidence": 1.0,
+      "duration_delta_ms": 0,
+      "duration_ms": 247320,
+      "last_verified_at": "2026-08-21T20:39:17+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "VpE1CndMONI"
+    }
+  ],
+  "updated_at": "2026-08-21T20:53:47+00:00"
+}
