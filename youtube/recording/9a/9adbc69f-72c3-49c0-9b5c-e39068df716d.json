@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "9adbc69f-72c3-49c0-9b5c-e39068df716d",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "75cb4f0c9827078b",
+      "candidate_url": "https://www.youtube.com/watch?v=sxfi-Cs32-o",
+      "confidence": 0.9226139175911695,
+      "duration_delta_ms": 0,
+      "duration_ms": 276400,
+      "last_verified_at": "2026-08-21T12:11:29+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "sxfi-Cs32-o"
+    }
+  ],
+  "updated_at": "2026-08-21T12:53:44+00:00"
+}
