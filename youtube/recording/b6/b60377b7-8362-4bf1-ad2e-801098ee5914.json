@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "b60377b7-8362-4bf1-ad2e-801098ee5914",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "a93c00e3e0ac0b40",
+      "candidate_url": "https://www.youtube.com/watch?v=appBRYM_FYY",
+      "confidence": 1.0,
+      "duration_delta_ms": 1000,
+      "duration_ms": 119999,
+      "last_verified_at": "2026-08-21T10:58:09+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "appBRYM_FYY"
+    }
+  ],
+  "updated_at": "2026-08-21T11:53:44+00:00"
+}
