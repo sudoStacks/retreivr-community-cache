@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "103b6339-1eca-4991-8035-d9357ed88797",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "5fee2821f4d52f57",
+      "candidate_url": "https://www.youtube.com/watch?v=SuapCENFM2U",
+      "confidence": 0.8075335247455487,
+      "duration_delta_ms": 4000,
+      "duration_ms": 201893,
+      "last_verified_at": "2026-08-21T00:35:26+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "SuapCENFM2U"
+    }
+  ],
+  "updated_at": "2026-08-21T00:53:41+00:00"
+}
