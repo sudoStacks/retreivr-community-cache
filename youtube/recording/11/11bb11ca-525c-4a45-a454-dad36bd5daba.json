@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "11bb11ca-525c-4a45-a454-dad36bd5daba",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "151a5adcc3696355",
+      "candidate_url": "https://www.youtube.com/watch?v=DAK-PAbOR6k",
+      "confidence": 1.0,
+      "duration_delta_ms": 2000,
+      "duration_ms": 186000,
+      "last_verified_at": "2026-08-21T04:08:57+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "DAK-PAbOR6k"
+    }
+  ],
+  "updated_at": "2026-08-21T04:53:44+00:00"
+}

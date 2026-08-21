@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "899acba5-e99d-429c-867a-3429731d0903",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "d2cbc5294caa75e8",
+      "candidate_url": "https://www.youtube.com/watch?v=epArSqlMQ-E",
+      "confidence": 1.0,
+      "duration_delta_ms": 1000,
+      "duration_ms": 179000,
+      "last_verified_at": "2026-08-21T04:14:03+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "epArSqlMQ-E"
+    }
+  ],
+  "updated_at": "2026-08-21T04:53:53+00:00"
+}
