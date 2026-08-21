@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "dfa9dbcd-947f-4837-abd2-613620ee14f0",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "2d1947ddbf46e2e4",
+      "candidate_url": "https://www.youtube.com/watch?v=kgERMZaTEZE",
+      "confidence": 1.0,
+      "duration_delta_ms": 0,
+      "duration_ms": 66000,
+      "last_verified_at": "2026-08-21T06:32:59+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "kgERMZaTEZE"
+    }
+  ],
+  "updated_at": "2026-08-21T06:53:44+00:00"
+}
