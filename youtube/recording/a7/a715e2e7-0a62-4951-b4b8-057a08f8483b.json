@@ -11,7 +11,19 @@
       "source": "youtube",
       "verified_by": "successful_playback",
       "video_id": "8mW_FI-SN0Y"
+    },
+    {
+      "candidate_id": "9fd0a726352c51a6",
+      "candidate_url": "https://www.youtube.com/watch?v=gRnXCeUTz-0",
+      "confidence": 0.801277216866982,
+      "duration_delta_ms": 4000,
+      "duration_ms": 183000,
+      "last_verified_at": "2026-08-22T22:29:01+00:00",
+      "retreivr_version": "1.1.4-local-4b1d520",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "gRnXCeUTz-0"
     }
   ],
-  "updated_at": "2026-08-04T16:22:24+00:00"
+  "updated_at": "2026-08-22T22:37:33+00:00"
 }
