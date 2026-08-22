@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "5f4063b3-8b71-45bd-bf3a-a5721e3d8efa",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "5b3e24fc294d9555",
+      "candidate_url": "https://www.youtube.com/watch?v=Ofx-jyaoEUE",
+      "confidence": 1.0,
+      "duration_delta_ms": 1000,
+      "duration_ms": 155000,
+      "last_verified_at": "2026-08-22T22:35:38+00:00",
+      "retreivr_version": "1.1.4-local-4b1d520",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "Ofx-jyaoEUE"
+    }
+  ],
+  "updated_at": "2026-08-22T22:37:38+00:00"
+}
