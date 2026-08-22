@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "b78a5d13-fd1c-4569-9736-34e5d6e79afd",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "49ce5d2b0aa17c9a",
+      "candidate_url": "https://www.youtube.com/watch?v=Padg_GuobWg",
+      "confidence": 1.0,
+      "duration_delta_ms": 1000,
+      "duration_ms": 147875,
+      "last_verified_at": "2026-08-22T05:07:30+00:00",
+      "retreivr_version": "v1.1.4",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "Padg_GuobWg"
+    }
+  ],
+  "updated_at": "2026-08-22T05:53:42+00:00"
+}
