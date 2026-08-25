@@ -1,0 +1,17 @@
+{
+  "recording_mbid": "08d04ed4-5900-440e-9ba2-ead0182bceb3",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "LvEnVmvekUI",
+      "candidate_url": "https://www.youtube.com/watch?v=LvEnVmvekUI",
+      "confidence": 0.78,
+      "last_verified_at": "2026-08-25T18:45:37+00:00",
+      "retreivr_version": "targeted-backfill",
+      "source": "youtube",
+      "verified_by": "retreivr_resolution_sources_backfill",
+      "video_id": "LvEnVmvekUI"
+    }
+  ],
+  "updated_at": "2026-08-25T18:45:51+00:00"
+}
