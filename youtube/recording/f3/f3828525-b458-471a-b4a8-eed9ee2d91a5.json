@@ -1,0 +1,17 @@
+{
+  "recording_mbid": "f3828525-b458-471a-b4a8-eed9ee2d91a5",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "Tup1-wNCu-c",
+      "candidate_url": "https://www.youtube.com/watch?v=Tup1-wNCu-c",
+      "confidence": 0.78,
+      "last_verified_at": "2026-08-25T18:48:52+00:00",
+      "retreivr_version": "targeted-backfill",
+      "source": "youtube",
+      "verified_by": "retreivr_resolution_sources_backfill",
+      "video_id": "Tup1-wNCu-c"
+    }
+  ],
+  "updated_at": "2026-08-25T18:48:57+00:00"
+}
