@@ -1,0 +1,17 @@
+{
+  "recording_mbid": "e291fa28-b3d1-451f-8a1d-761ce44f6818",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "CHgmgLxjlr8",
+      "candidate_url": "https://www.youtube.com/watch?v=CHgmgLxjlr8",
+      "confidence": 0.78,
+      "last_verified_at": "2026-08-25T19:43:51+00:00",
+      "retreivr_version": "targeted-backfill",
+      "source": "youtube",
+      "verified_by": "retreivr_resolution_sources_backfill",
+      "video_id": "CHgmgLxjlr8"
+    }
+  ],
+  "updated_at": "2026-08-25T19:44:34+00:00"
+}
