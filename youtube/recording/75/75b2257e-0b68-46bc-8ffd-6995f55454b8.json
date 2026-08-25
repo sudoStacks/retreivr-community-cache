@@ -1,0 +1,17 @@
+{
+  "recording_mbid": "75b2257e-0b68-46bc-8ffd-6995f55454b8",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "DQkv_-Vag98",
+      "candidate_url": "https://www.youtube.com/watch?v=DQkv_-Vag98",
+      "confidence": 0.78,
+      "last_verified_at": "2026-08-25T18:48:53+00:00",
+      "retreivr_version": "targeted-backfill",
+      "source": "youtube",
+      "verified_by": "retreivr_resolution_sources_backfill",
+      "video_id": "DQkv_-Vag98"
+    }
+  ],
+  "updated_at": "2026-08-25T18:49:07+00:00"
+}
