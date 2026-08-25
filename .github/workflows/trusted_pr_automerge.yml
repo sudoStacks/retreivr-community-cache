@@ -100,3 +100,27 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh pr merge --repo "${{ github.repository }}" --squash "${{ steps.trust.outputs.pr_number }}"
+
+      - name: Refresh main after merge
+        if: steps.trust.outputs.trusted == 'true'
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+
+      - name: Regenerate dataset stats after trusted merge
+        if: steps.trust.outputs.trusted == 'true'
+        run: python scripts/generate_stats.py --write
+
+      - name: Commit stats update after trusted merge
+        if: steps.trust.outputs.trusted == 'true'
+        run: |
+          if git diff --quiet -- stats/dataset.json; then
+            echo "No stats changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats/dataset.json
+          git commit -m "Update dataset stats"
+          git push origin HEAD:main
