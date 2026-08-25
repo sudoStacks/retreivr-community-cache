@@ -1,0 +1,17 @@
+{
+  "recording_mbid": "a31d5db5-57b8-46ed-adf3-0506f35601d8",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "StDQujoVWow",
+      "candidate_url": "https://www.youtube.com/watch?v=StDQujoVWow",
+      "confidence": 0.78,
+      "last_verified_at": "2026-08-25T18:45:39+00:00",
+      "retreivr_version": "targeted-backfill",
+      "source": "youtube",
+      "verified_by": "retreivr_resolution_sources_backfill",
+      "video_id": "StDQujoVWow"
+    }
+  ],
+  "updated_at": "2026-08-25T18:45:47+00:00"
+}
