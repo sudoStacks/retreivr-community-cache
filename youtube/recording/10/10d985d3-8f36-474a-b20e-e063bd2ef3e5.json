@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "10d985d3-8f36-474a-b20e-e063bd2ef3e5",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "633da6ed1b74e07c",
+      "candidate_url": "https://www.youtube.com/watch?v=Gov47fCETM8",
+      "confidence": 1.0,
+      "duration_delta_ms": 0,
+      "duration_ms": 224493,
+      "last_verified_at": "2026-08-25T16:55:49+00:00",
+      "retreivr_version": "v1.1.6",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "Gov47fCETM8"
+    }
+  ],
+  "updated_at": "2026-08-25T17:07:59+00:00"
+}

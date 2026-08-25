@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "3e7b74b3-bc65-45f6-b415-ea205d305e67",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "705abc45bb7cdf48",
+      "candidate_url": "https://www.youtube.com/watch?v=Pkbl-xQuupA",
+      "confidence": 1.0,
+      "duration_delta_ms": 1000,
+      "duration_ms": 262000,
+      "last_verified_at": "2026-08-25T16:16:19+00:00",
+      "retreivr_version": "v1.1.6",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "Pkbl-xQuupA"
+    }
+  ],
+  "updated_at": "2026-08-25T17:07:59+00:00"
+}
