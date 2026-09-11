@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "76fefe18-81fe-43e2-a9e5-65c1782fc5da",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "c6eecb576ae818f8",
+      "candidate_url": "https://www.youtube.com/watch?v=SQLmm_qktro",
+      "confidence": 1.0,
+      "duration_delta_ms": 1000,
+      "duration_ms": 172960,
+      "last_verified_at": "2026-09-11T14:01:11+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "SQLmm_qktro"
+    }
+  ],
+  "updated_at": "2026-09-11T14:18:35+00:00"
+}
