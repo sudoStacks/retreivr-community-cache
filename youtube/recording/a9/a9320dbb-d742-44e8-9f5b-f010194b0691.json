@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "a9320dbb-d742-44e8-9f5b-f010194b0691",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "b8f51caf6ef4e5a7",
+      "candidate_url": "https://www.youtube.com/watch?v=yxzwem-oMUE",
+      "confidence": 0.9922789539289363,
+      "duration_delta_ms": 7000,
+      "duration_ms": 200573,
+      "last_verified_at": "2026-09-11T06:01:01+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "yxzwem-oMUE"
+    }
+  ],
+  "updated_at": "2026-09-11T06:18:38+00:00"
+}
