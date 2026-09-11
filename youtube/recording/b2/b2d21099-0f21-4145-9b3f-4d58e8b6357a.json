@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "b2d21099-0f21-4145-9b3f-4d58e8b6357a",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "f8ed03f4c5a16767",
+      "candidate_url": "https://www.youtube.com/watch?v=vZS22yojo40",
+      "confidence": 1.0,
+      "duration_delta_ms": 0,
+      "duration_ms": 191000,
+      "last_verified_at": "2026-09-11T11:07:43+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "vZS22yojo40"
+    }
+  ],
+  "updated_at": "2026-09-11T11:18:35+00:00"
+}
