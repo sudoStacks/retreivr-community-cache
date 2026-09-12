@@ -13,7 +13,19 @@
       "source": "youtube",
       "verified_by": "retreivr",
       "video_id": "mY5OgJthfdg"
+    },
+    {
+      "candidate_id": "1dbc0109e0a7af56",
+      "candidate_url": "https://www.youtube.com/watch?v=BMX0mSSgbRU",
+      "confidence": 0.8075370321367752,
+      "duration_delta_ms": 3000,
+      "duration_ms": 203000,
+      "last_verified_at": "2026-09-12T21:06:15+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "BMX0mSSgbRU"
     }
   ],
-  "updated_at": "2026-08-21T10:53:48+00:00"
+  "updated_at": "2026-09-12T21:18:39+00:00"
 }
