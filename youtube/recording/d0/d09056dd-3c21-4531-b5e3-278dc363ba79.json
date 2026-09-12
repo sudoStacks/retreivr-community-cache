@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "d09056dd-3c21-4531-b5e3-278dc363ba79",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "9fdc1c6d27c9067f",
+      "candidate_url": "https://www.youtube.com/watch?v=QDB-uk-M9oc",
+      "confidence": 0.8005021425758571,
+      "duration_delta_ms": 1000,
+      "duration_ms": 182533,
+      "last_verified_at": "2026-09-12T12:07:39+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "QDB-uk-M9oc"
+    }
+  ],
+  "updated_at": "2026-09-12T12:18:37+00:00"
+}
