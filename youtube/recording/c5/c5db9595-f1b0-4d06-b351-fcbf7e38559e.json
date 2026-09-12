@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "c5db9595-f1b0-4d06-b351-fcbf7e38559e",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "025e1c7040564c2c",
+      "candidate_url": "https://www.youtube.com/watch?v=GaR-62-jrVA",
+      "confidence": 1.0,
+      "duration_delta_ms": 1000,
+      "duration_ms": 229666,
+      "last_verified_at": "2026-09-12T07:58:30+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "GaR-62-jrVA"
+    }
+  ],
+  "updated_at": "2026-09-12T08:18:35+00:00"
+}
