@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "67df2089-cbc3-48f5-8f88-406a118584c7",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "95180509aaf30769",
+      "candidate_url": "https://www.youtube.com/watch?v=DanbXOvn_ko",
+      "confidence": 1.0,
+      "duration_delta_ms": 1000,
+      "duration_ms": 224000,
+      "last_verified_at": "2026-09-12T09:02:56+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "DanbXOvn_ko"
+    }
+  ],
+  "updated_at": "2026-09-12T09:18:42+00:00"
+}
