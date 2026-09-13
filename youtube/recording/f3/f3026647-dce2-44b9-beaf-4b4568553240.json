@@ -3,6 +3,18 @@
   "schema_version": 1,
   "sources": [
     {
+      "candidate_id": "f7a8c340e982eb18",
+      "candidate_url": "https://www.youtube.com/watch?v=agArOwTzb0E",
+      "confidence": 1.0,
+      "duration_delta_ms": 1000,
+      "duration_ms": 191000,
+      "last_verified_at": "2026-09-13T05:06:30+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "agArOwTzb0E"
+    },
+    {
       "candidate_id": "7e0e4e2a99ebec8f",
       "candidate_url": "https://www.youtube.com/watch?v=Ws64Ip7hmTs",
       "confidence": 0.7627286503436522,
@@ -15,5 +27,5 @@
       "video_id": "Ws64Ip7hmTs"
     }
   ],
-  "updated_at": "2026-08-21T01:53:47+00:00"
+  "updated_at": "2026-09-13T05:18:44+00:00"
 }
