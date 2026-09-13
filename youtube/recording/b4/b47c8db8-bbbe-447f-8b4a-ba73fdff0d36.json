@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "b47c8db8-bbbe-447f-8b4a-ba73fdff0d36",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "891879b61faa9098",
+      "candidate_url": "https://www.youtube.com/watch?v=XiengPyb62M",
+      "confidence": 0.7629272516728078,
+      "duration_delta_ms": 1000,
+      "duration_ms": 187017,
+      "last_verified_at": "2026-09-13T03:06:13+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "XiengPyb62M"
+    }
+  ],
+  "updated_at": "2026-09-13T03:18:40+00:00"
+}
