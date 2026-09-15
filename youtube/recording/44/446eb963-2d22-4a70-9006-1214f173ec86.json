@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "446eb963-2d22-4a70-9006-1214f173ec86",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "ed85d80b1191bf35",
+      "candidate_url": "https://www.youtube.com/watch?v=S98piPRVivs",
+      "confidence": 0.7995644038544047,
+      "duration_delta_ms": 1000,
+      "duration_ms": 323600,
+      "last_verified_at": "2026-09-15T15:06:34+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "S98piPRVivs"
+    }
+  ],
+  "updated_at": "2026-09-15T15:18:41+00:00"
+}
