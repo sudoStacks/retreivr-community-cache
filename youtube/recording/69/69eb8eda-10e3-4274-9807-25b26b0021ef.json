@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "69eb8eda-10e3-4274-9807-25b26b0021ef",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "9816d1d7c0483100",
+      "candidate_url": "https://www.youtube.com/watch?v=VAGUewixvFA",
+      "confidence": 1.0,
+      "duration_delta_ms": 1000,
+      "duration_ms": 291800,
+      "last_verified_at": "2026-09-15T23:06:49+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "VAGUewixvFA"
+    }
+  ],
+  "updated_at": "2026-09-15T23:18:35+00:00"
+}
