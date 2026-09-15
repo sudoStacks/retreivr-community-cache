@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "26934d57-046b-4114-8dbd-cbc5605aed3f",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "8a5e1c97eb46e647",
+      "candidate_url": "https://www.youtube.com/watch?v=iPmaAreQLDA",
+      "confidence": 0.9804757898567001,
+      "duration_delta_ms": 1000,
+      "duration_ms": 236760,
+      "last_verified_at": "2026-09-15T10:54:19+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "iPmaAreQLDA"
+    }
+  ],
+  "updated_at": "2026-09-15T11:18:46+00:00"
+}
