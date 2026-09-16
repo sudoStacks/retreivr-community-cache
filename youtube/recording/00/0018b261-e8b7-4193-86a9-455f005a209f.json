@@ -1,0 +1,19 @@
+{
+  "recording_mbid": "0018b261-e8b7-4193-86a9-455f005a209f",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "fe81f3140d18dbf3",
+      "candidate_url": "https://www.youtube.com/watch?v=BlndNHsOLUM",
+      "confidence": 1.0,
+      "duration_delta_ms": 0,
+      "duration_ms": 236000,
+      "last_verified_at": "2026-09-15T23:48:02+00:00",
+      "retreivr_version": "1.1.9",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "BlndNHsOLUM"
+    }
+  ],
+  "updated_at": "2026-09-16T00:18:38+00:00"
+}
