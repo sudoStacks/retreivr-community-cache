@@ -1,0 +1,17 @@
+{
+  "recording_mbid": "c386bc5b-988f-40da-8ea1-b08860c47704",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "xqds0B_meys",
+      "candidate_url": "https://youtube.com/watch?v=xqds0B_meys",
+      "confidence": 1.0,
+      "last_verified_at": "2026-09-30T21:25:28+00:00",
+      "retreivr_version": "1.1.9-artist-credit-393fe27",
+      "source": "youtube",
+      "verified_by": "successful_playback",
+      "video_id": "xqds0B_meys"
+    }
+  ],
+  "updated_at": "2026-09-30T21:55:22+00:00"
+}
