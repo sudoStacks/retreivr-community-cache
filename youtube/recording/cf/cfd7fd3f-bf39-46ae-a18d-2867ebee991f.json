@@ -1,0 +1,29 @@
+{
+  "recording_mbid": "cfd7fd3f-bf39-46ae-a18d-2867ebee991f",
+  "schema_version": 1,
+  "sources": [
+    {
+      "candidate_id": "05wXNKzOkRM",
+      "candidate_url": "https://www.youtube.com/watch?v=05wXNKzOkRM",
+      "confidence": 1.0,
+      "duration_delta_ms": 2000,
+      "duration_ms": 188000,
+      "last_verified_at": "2026-09-30T21:29:05+00:00",
+      "retreivr_version": "1.1.9-artist-credit-393fe27",
+      "source": "youtube",
+      "verified_by": "retreivr",
+      "video_id": "05wXNKzOkRM"
+    },
+    {
+      "candidate_id": "x9W598i7hGU",
+      "candidate_url": "https://youtube.com/watch?v=x9W598i7hGU",
+      "confidence": 1.0,
+      "last_verified_at": "2026-09-30T21:25:28+00:00",
+      "retreivr_version": "1.1.9-artist-credit-393fe27",
+      "source": "youtube",
+      "verified_by": "successful_playback",
+      "video_id": "x9W598i7hGU"
+    }
+  ],
+  "updated_at": "2026-09-30T21:55:21+00:00"
+}
